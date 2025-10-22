@@ -52,7 +52,7 @@
             display: none;
             position: absolute;
             background-color: white;
-            min-width: 280px;
+            min-width: 350px;
             box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
             z-index: 1000;
             border: 1px solid #e5e7eb;
@@ -68,7 +68,7 @@
             padding: 0.5rem 0.75rem;
             cursor: pointer;
             transition: background-color 0.2s;
-            font-size: 0.85rem;
+            font-size: 0.75rem;
         }
 
         .dropdown-item:hover {
@@ -127,12 +127,12 @@
         }
 
         .dropdown-trigger {
-            width: 280px;
+            width: 350px;
             display: flex;
             align-items: center;
             justify-content: space-between;
             font-weight: 500;
-            font-size: 0.85rem;
+            font-size: 0.75rem;
             background: none;
             border: none;
             cursor: pointer;
@@ -262,12 +262,6 @@
                 <div class="w-full">
                     <div class="flex w-full border-b bg-transparent">
                         <div class="tab-trigger active" data-tab="custom-report">Custom Report</div>
-                        <div class="tab-trigger" data-tab="summary">Summary</div>
-                        <div class="tab-trigger" data-tab="traffic">Traffic</div>
-                        <div class="tab-trigger" data-tab="spending">Spending</div>
-                        <div class="tab-trigger" data-tab="visitor-profile">Visitor Profile</div>
-                        <div class="tab-trigger" data-tab="shared-visitors">Shared Visitors</div>
-                        <div class="tab-trigger" data-tab="brands">Brands</div>
                     </div>
 
                     <div class="px-6 py-4 border-b flex items-center justify-between">
@@ -305,61 +299,19 @@
                                 <img src="./pedestrians-chart.png" alt="Daily Average Pedestrians" />
                                 <img src="./tourist-ranking.png" alt="Tourist Nationality Ranking" />
                                 <img src="./international_tourists_chart.png" alt="International Tourists Chart" />
-                                <img src="./images_commercial/population-pyramid.png" alt="Population Pyramid" />
+                                <img src="./population-pyramid.png" alt="Population Pyramid" />
                             </div>
                             <!-- Commercial Area Images (hidden by default) -->
                             <div id="commercialImages" style="display: none;">
-                                <img src="./images_commercial/traffic-metrics.png" alt="Traffic Metrics" />
-                                <img src="./images_commercial/hourly-distribution.png" alt="Hourly Distribution" />
-                                <img src="./images_commercial/weekly-evolution.png" alt="Weekly Evolution" />
-                                <img src="./images_commercial/shared-visitors.png" alt="Shared Visitors" />
-                                <img src="./images_commercial/tourist-ranking.png" alt="Tourist Ranking" />
+                                <img src="./traffic-metrics_commercial.png" alt="Traffic Metrics" />
+                                <img src="./hourly-distribution.png" alt="Hourly Distribution" />
+                                <img src="./weekly-evolution.png" alt="Weekly Evolution" />
+                                <img src="./tourist-ranking_commercial.png" alt="Tourist Ranking" />
                                 <img src="./international_tourists_chart.png" alt="International Tourists Chart" />
-                                <img src="./images_commercial/demographics.png" alt="Demographics" />
-                                <img src="./images_commercial/population-pyramid.png" alt="Population Pyramid" />
-                                <img src="./images_commercial/socioeconomics.png" alt="Socioeconomics" />
-                            </div>
-                        </div>
-                    </div>
-                    <div class="tab-content" id="summary">
-                        <div class="scrollable-feed">
-                            <div class="text-gray-600 text-center py-12">
-                                Charts will be displayed here
-                            </div>
-                        </div>
-                    </div>
-                    <div class="tab-content" id="traffic">
-                        <div class="scrollable-feed">
-                            <div class="text-gray-600 text-center py-12">
-                                Charts will be displayed here
-                            </div>
-                        </div>
-                    </div>
-                    <div class="tab-content" id="spending">
-                        <div class="scrollable-feed">
-                            <div class="text-gray-600 text-center py-12">
-                                Charts will be displayed here
-                            </div>
-                        </div>
-                    </div>
-                    <div class="tab-content" id="visitor-profile">
-                        <div class="scrollable-feed">
-                            <div class="text-gray-600 text-center py-12">
-                                Charts will be displayed here
-                            </div>
-                        </div>
-                    </div>
-                    <div class="tab-content" id="shared-visitors">
-                        <div class="scrollable-feed">
-                            <div class="text-gray-600 text-center py-12">
-                                Charts will be displayed here
-                            </div>
-                        </div>
-                    </div>
-                    <div class="tab-content" id="brands">
-                        <div class="scrollable-feed">
-                            <div class="text-gray-600 text-center py-12">
-                                Charts will be displayed here
+                                <img src="./shared-visitors.png" alt="Shared Visitors" />
+                                <img src="./demographics.png" alt="Demographics" />
+                                <img src="./population-pyramid.png" alt="Population Pyramid" />
+                                <img src="./socioeconomics.png" alt="Socioeconomics" />
                             </div>
                         </div>
                     </div>
@@ -401,23 +353,8 @@
             document.getElementById('passwordInput').focus();
         });
 
-        // Tab switching
-        const tabTriggers = document.querySelectorAll('.tab-trigger');
-        const tabContents = document.querySelectorAll('.tab-content');
-
-        tabTriggers.forEach(trigger => {
-            trigger.addEventListener('click', () => {
-                const tabName = trigger.getAttribute('data-tab');
-                
-                // Remove active class from all triggers and contents
-                tabTriggers.forEach(t => t.classList.remove('active'));
-                tabContents.forEach(c => c.classList.remove('active'));
-                
-                // Add active class to clicked trigger and corresponding content
-                trigger.classList.add('active');
-                document.getElementById(tabName).classList.add('active');
-            });
-        });
+        // Tab switching (simplified for single tab)
+        // No tab switching needed since we only have Custom Report
 
         // Dropdown functionality
         const dropdown = document.getElementById('locationDropdown');
