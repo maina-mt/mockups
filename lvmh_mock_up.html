@@ -277,14 +277,14 @@
                             </div>
                             <div class="dropdown">
                                 <button class="dropdown-trigger" id="locationDropdown">
-                                    <span id="selectedLocation">El Corte Ingles Barcelona</span>
+                                    <span id="selectedLocation">El Corte Ingles Barcelona (address)</span>
                                     <svg width="15" height="15" viewBox="0 0 15 15" fill="none" xmlns="http://www.w3.org/2000/svg">
                                         <path d="M3.13523 6.15803C3.3241 5.95657 3.64052 5.94637 3.84197 6.13523L7.5 9.56464L11.158 6.13523C11.3595 5.94637 11.6759 5.95657 11.8648 6.15803C12.0536 6.35949 12.0434 6.67591 11.842 6.86477L7.84197 10.6148C7.64964 10.7951 7.35036 10.7951 7.15803 10.6148L3.15803 6.86477C2.95657 6.67591 2.94637 6.35949 3.13523 6.15803Z" fill="currentColor"/>
                                     </svg>
                                 </button>
                                 <div class="dropdown-content" id="locationDropdownContent">
-                                    <div class="dropdown-item" data-value="barcelona">El Corte Ingles Barcelona</div>
-                                    <div class="dropdown-item" data-value="cadiz">El Corte Ingles Cadiz</div>
+                                    <div class="dropdown-item" data-value="address">El Corte Ingles Barcelona (address)</div>
+                                    <div class="dropdown-item" data-value="commercial">El Corte Ingles Barcelona (commercial area)</div>
                                 </div>
                             </div>
                         </div>
@@ -295,13 +295,30 @@
 
                     <!-- Tab Contents -->
                     <div class="tab-content active" id="custom-report">
-                        <div class="scrollable-feed">
-                            <img src="./traffic-metrics.png" alt="Traffic Metrics" />
-                            <img src="./footfall-pattern.png" alt="Footfall Time Pattern" />
-                            <img src="./footfall-benchmark.png" alt="My Stores Footfall Benchmark" />
-                            <img src="./traffic-trends.png" alt="Traffic Trends" />
-                            <img src="./pedestrians-chart.png" alt="Daily Average Pedestrians" />
-                            <img src="./tourist-ranking.png" alt="Tourist Nationality Ranking" />
+                        <div class="scrollable-feed" id="imageContainer">
+                            <!-- Address Images (default) -->
+                            <div id="addressImages">
+                                <img src="./traffic-metrics.png" alt="Traffic Metrics" />
+                                <img src="./footfall-pattern.png" alt="Footfall Time Pattern" />
+                                <img src="./footfall-benchmark.png" alt="My Stores Footfall Benchmark" />
+                                <img src="./traffic-trends.png" alt="Traffic Trends" />
+                                <img src="./pedestrians-chart.png" alt="Daily Average Pedestrians" />
+                                <img src="./tourist-ranking.png" alt="Tourist Nationality Ranking" />
+                                <img src="./international_tourists_chart.png" alt="International Tourists Chart" />
+                                <img src="./images_commercial/population-pyramid.png" alt="Population Pyramid" />
+                            </div>
+                            <!-- Commercial Area Images (hidden by default) -->
+                            <div id="commercialImages" style="display: none;">
+                                <img src="./images_commercial/traffic-metrics.png" alt="Traffic Metrics" />
+                                <img src="./images_commercial/hourly-distribution.png" alt="Hourly Distribution" />
+                                <img src="./images_commercial/weekly-evolution.png" alt="Weekly Evolution" />
+                                <img src="./images_commercial/shared-visitors.png" alt="Shared Visitors" />
+                                <img src="./images_commercial/tourist-ranking.png" alt="Tourist Ranking" />
+                                <img src="./international_tourists_chart.png" alt="International Tourists Chart" />
+                                <img src="./images_commercial/demographics.png" alt="Demographics" />
+                                <img src="./images_commercial/population-pyramid.png" alt="Population Pyramid" />
+                                <img src="./images_commercial/socioeconomics.png" alt="Socioeconomics" />
+                            </div>
                         </div>
                     </div>
                     <div class="tab-content" id="summary">
@@ -417,8 +434,25 @@
             item.addEventListener('click', () => {
                 selectedLocation.textContent = item.textContent;
                 dropdownContent.classList.remove('show');
+                
+                // Update images based on selected location
+                updateImages(item.getAttribute('data-value'));
             });
         });
+
+        // Function to update images based on location
+        function updateImages(locationType) {
+            const addressImages = document.getElementById('addressImages');
+            const commercialImages = document.getElementById('commercialImages');
+            
+            if (locationType === 'commercial') {
+                addressImages.style.display = 'none';
+                commercialImages.style.display = 'block';
+            } else {
+                addressImages.style.display = 'block';
+                commercialImages.style.display = 'none';
+            }
+        }
 
         // Close dropdown when clicking outside
         document.addEventListener('click', (e) => {
