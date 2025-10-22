@@ -1,0 +1,431 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Site Selector for LVMH - Dashboard</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+            overflow: hidden;
+        }
+
+        .tab-trigger {
+            padding: 0.75rem 0.75rem;
+            cursor: pointer;
+            border-bottom: 2px solid transparent;
+            transition: all 0.2s;
+            font-size: 0.8rem;
+            white-space: nowrap;
+        }
+
+        .tab-trigger:hover {
+            background-color: rgba(0, 0, 0, 0.05);
+        }
+
+        .tab-trigger.active {
+            border-bottom-color: hsl(222.2, 47.4%, 11.2%);
+            background-color: transparent;
+        }
+
+        .tab-content {
+            display: none;
+        }
+
+        .tab-content.active {
+            display: block;
+        }
+
+        .dropdown {
+            position: relative;
+            display: inline-block;
+        }
+
+        .dropdown-content {
+            display: none;
+            position: absolute;
+            background-color: white;
+            min-width: 280px;
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+            z-index: 1000;
+            border: 1px solid #e5e7eb;
+            border-radius: 0.375rem;
+            margin-top: 0.25rem;
+        }
+
+        .dropdown-content.show {
+            display: block;
+        }
+
+        .dropdown-item {
+            padding: 0.5rem 0.75rem;
+            cursor: pointer;
+            transition: background-color 0.2s;
+            font-size: 0.85rem;
+        }
+
+        .dropdown-item:hover {
+            background-color: #f3f4f6;
+        }
+
+        .btn {
+            padding: 0.5rem 1rem;
+            border-radius: 0.375rem;
+            font-size: 0.875rem;
+            font-weight: 500;
+            cursor: pointer;
+            transition: all 0.2s;
+            border: 1px solid #e5e7eb;
+        }
+
+        .btn-outline {
+            background-color: white;
+            color: #374151;
+        }
+
+        .btn-outline:hover {
+            background-color: #f9fafb;
+        }
+
+        .btn-default {
+            background-color: hsl(222.2, 47.4%, 11.2%);
+            color: white;
+            border-color: hsl(222.2, 47.4%, 11.2%);
+        }
+
+        .btn-default:hover {
+            opacity: 0.9;
+        }
+
+        .btn-link {
+            background: none;
+            border: none;
+            color: hsl(222.2, 47.4%, 11.2%);
+            text-decoration: none;
+        }
+
+        .btn-link:hover {
+            text-decoration: underline;
+        }
+
+        .scrollable-feed {
+            height: calc(100vh - 300px);
+            overflow-y: auto;
+            padding: 1.5rem;
+        }
+
+        .scrollable-feed img {
+            width: 100%;
+            margin-bottom: 1.5rem;
+        }
+
+        .dropdown-trigger {
+            width: 280px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            font-weight: 500;
+            font-size: 0.85rem;
+            background: none;
+            border: none;
+            cursor: pointer;
+            padding: 0.5rem;
+        }
+
+        .dropdown-trigger:hover {
+            background-color: rgba(0, 0, 0, 0.05);
+            border-radius: 0.375rem;
+        }
+
+        .password-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.8);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            z-index: 9999;
+        }
+
+        .password-modal {
+            background-color: white;
+            padding: 2rem;
+            border-radius: 0.5rem;
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.2);
+            text-align: center;
+            min-width: 300px;
+        }
+
+        .password-input {
+            width: 100%;
+            padding: 0.75rem;
+            border: 1px solid #e5e7eb;
+            border-radius: 0.375rem;
+            margin: 1rem 0;
+            font-size: 1rem;
+        }
+
+        .password-input:focus {
+            outline: none;
+            border-color: #1e3a8a;
+            box-shadow: 0 0 0 2px rgba(30, 58, 138, 0.1);
+        }
+
+        .password-button {
+            width: 100%;
+            padding: 0.75rem;
+            background-color: #1e3a8a;
+            color: white;
+            border: none;
+            border-radius: 0.375rem;
+            font-size: 1rem;
+            cursor: pointer;
+            transition: background-color 0.2s;
+        }
+
+        .password-button:hover {
+            background-color: #1e40af;
+        }
+
+        .password-error {
+            color: #dc2626;
+            font-size: 0.875rem;
+            margin-top: 0.5rem;
+            display: none;
+        }
+
+        .main-content {
+            display: none;
+        }
+    </style>
+</head>
+<body>
+    <!-- Password Protection Overlay -->
+    <div class="password-overlay" id="passwordOverlay">
+        <div class="password-modal">
+            <h2 class="text-xl font-semibold mb-4">Access Required</h2>
+            <p class="text-gray-600 mb-4">Please enter the password to access the LVMH dashboard</p>
+            <input 
+                type="password" 
+                class="password-input" 
+                id="passwordInput" 
+                placeholder="Enter password"
+                autocomplete="off"
+            >
+            <button class="password-button" onclick="checkPassword()">Access Dashboard</button>
+            <div class="password-error" id="passwordError">Incorrect password. Please try again.</div>
+        </div>
+    </div>
+
+    <!-- Main Content (hidden by default) -->
+    <div class="main-content flex h-screen w-full" id="mainContent">
+        <!-- Left side - Map -->
+        <div class="w-1/2 relative">
+            <img 
+                src="./geoblink_map.png" 
+                alt="Geoblink Map" 
+                class="w-full h-full object-cover"
+            />
+        </div>
+
+        <!-- Right side - Scrollable Feed -->
+        <div class="w-1/2 flex flex-col bg-white">
+            <!-- Header -->
+            <div class="border-b">
+                <div class="flex items-center justify-between px-6 py-3 border-b">
+                    <div class="flex items-center gap-2">
+                        <span class="text-sm text-gray-600">Site Selector for LVMH</span>
+                    </div>
+                    <div class="flex gap-2">
+                        <button class="btn btn-outline">Large</button>
+                        <button class="btn btn-default">Regular</button>
+                    </div>
+                </div>
+                
+                <div class="px-6 py-3 border-b">
+                    <p class="text-sm text-gray-600">
+                        Analysis: <span class="text-gray-900 font-medium">Commercial area</span>
+                    </p>
+                </div>
+
+                <!-- Tabs -->
+                <div class="w-full">
+                    <div class="flex w-full border-b bg-transparent">
+                        <div class="tab-trigger active" data-tab="custom-report">Custom Report</div>
+                        <div class="tab-trigger" data-tab="summary">Summary</div>
+                        <div class="tab-trigger" data-tab="traffic">Traffic</div>
+                        <div class="tab-trigger" data-tab="spending">Spending</div>
+                        <div class="tab-trigger" data-tab="visitor-profile">Visitor Profile</div>
+                        <div class="tab-trigger" data-tab="shared-visitors">Shared Visitors</div>
+                        <div class="tab-trigger" data-tab="brands">Brands</div>
+                    </div>
+
+                    <div class="px-6 py-4 border-b flex items-center justify-between">
+                        <div class="flex items-center gap-2">
+                            <div class="w-8 h-8 rounded-full flex items-center justify-center font-semibold text-sm" style="background-color: #1e3a8a; color: white;">
+                                1
+                            </div>
+                            <div class="dropdown">
+                                <button class="dropdown-trigger" id="locationDropdown">
+                                    <span id="selectedLocation">El Corte Ingles Barcelona</span>
+                                    <svg width="15" height="15" viewBox="0 0 15 15" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                        <path d="M3.13523 6.15803C3.3241 5.95657 3.64052 5.94637 3.84197 6.13523L7.5 9.56464L11.158 6.13523C11.3595 5.94637 11.6759 5.95657 11.8648 6.15803C12.0536 6.35949 12.0434 6.67591 11.842 6.86477L7.84197 10.6148C7.64964 10.7951 7.35036 10.7951 7.15803 10.6148L3.15803 6.86477C2.95657 6.67591 2.94637 6.35949 3.13523 6.15803Z" fill="currentColor"/>
+                                    </svg>
+                                </button>
+                                <div class="dropdown-content" id="locationDropdownContent">
+                                    <div class="dropdown-item" data-value="barcelona">El Corte Ingles Barcelona</div>
+                                    <div class="dropdown-item" data-value="cadiz">El Corte Ingles Cadiz</div>
+                                </div>
+                            </div>
+                        </div>
+                        <button class="btn btn-link">
+                            Compare with
+                        </button>
+                    </div>
+
+                    <!-- Tab Contents -->
+                    <div class="tab-content active" id="custom-report">
+                        <div class="scrollable-feed">
+                            <img src="./traffic-metrics.png" alt="Traffic Metrics" />
+                            <img src="./footfall-pattern.png" alt="Footfall Time Pattern" />
+                            <img src="./footfall-benchmark.png" alt="My Stores Footfall Benchmark" />
+                            <img src="./traffic-trends.png" alt="Traffic Trends" />
+                            <img src="./pedestrians-chart.png" alt="Daily Average Pedestrians" />
+                            <img src="./tourist-ranking.png" alt="Tourist Nationality Ranking" />
+                        </div>
+                    </div>
+                    <div class="tab-content" id="summary">
+                        <div class="scrollable-feed">
+                            <div class="text-gray-600 text-center py-12">
+                                Charts will be displayed here
+                            </div>
+                        </div>
+                    </div>
+                    <div class="tab-content" id="traffic">
+                        <div class="scrollable-feed">
+                            <div class="text-gray-600 text-center py-12">
+                                Charts will be displayed here
+                            </div>
+                        </div>
+                    </div>
+                    <div class="tab-content" id="spending">
+                        <div class="scrollable-feed">
+                            <div class="text-gray-600 text-center py-12">
+                                Charts will be displayed here
+                            </div>
+                        </div>
+                    </div>
+                    <div class="tab-content" id="visitor-profile">
+                        <div class="scrollable-feed">
+                            <div class="text-gray-600 text-center py-12">
+                                Charts will be displayed here
+                            </div>
+                        </div>
+                    </div>
+                    <div class="tab-content" id="shared-visitors">
+                        <div class="scrollable-feed">
+                            <div class="text-gray-600 text-center py-12">
+                                Charts will be displayed here
+                            </div>
+                        </div>
+                    </div>
+                    <div class="tab-content" id="brands">
+                        <div class="scrollable-feed">
+                            <div class="text-gray-600 text-center py-12">
+                                Charts will be displayed here
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Password protection
+        const correctPassword = "lvmh2024"; // Change this to your desired password
+        
+        function checkPassword() {
+            const passwordInput = document.getElementById('passwordInput');
+            const passwordError = document.getElementById('passwordError');
+            const passwordOverlay = document.getElementById('passwordOverlay');
+            const mainContent = document.getElementById('mainContent');
+            
+            if (passwordInput.value === correctPassword) {
+                passwordOverlay.style.display = 'none';
+                mainContent.style.display = 'flex';
+                passwordError.style.display = 'none';
+            } else {
+                passwordError.style.display = 'block';
+                passwordInput.value = '';
+                passwordInput.focus();
+            }
+        }
+        
+        // Allow Enter key to submit password
+        document.getElementById('passwordInput').addEventListener('keypress', function(e) {
+            if (e.key === 'Enter') {
+                checkPassword();
+            }
+        });
+        
+        // Focus on password input when page loads
+        window.addEventListener('load', function() {
+            document.getElementById('passwordInput').focus();
+        });
+
+        // Tab switching
+        const tabTriggers = document.querySelectorAll('.tab-trigger');
+        const tabContents = document.querySelectorAll('.tab-content');
+
+        tabTriggers.forEach(trigger => {
+            trigger.addEventListener('click', () => {
+                const tabName = trigger.getAttribute('data-tab');
+                
+                // Remove active class from all triggers and contents
+                tabTriggers.forEach(t => t.classList.remove('active'));
+                tabContents.forEach(c => c.classList.remove('active'));
+                
+                // Add active class to clicked trigger and corresponding content
+                trigger.classList.add('active');
+                document.getElementById(tabName).classList.add('active');
+            });
+        });
+
+        // Dropdown functionality
+        const dropdown = document.getElementById('locationDropdown');
+        const dropdownContent = document.getElementById('locationDropdownContent');
+        const selectedLocation = document.getElementById('selectedLocation');
+        const dropdownItems = document.querySelectorAll('.dropdown-item');
+
+        dropdown.addEventListener('click', (e) => {
+            e.stopPropagation();
+            dropdownContent.classList.toggle('show');
+        });
+
+        dropdownItems.forEach(item => {
+            item.addEventListener('click', () => {
+                selectedLocation.textContent = item.textContent;
+                dropdownContent.classList.remove('show');
+            });
+        });
+
+        // Close dropdown when clicking outside
+        document.addEventListener('click', (e) => {
+            if (!dropdown.contains(e.target)) {
+                dropdownContent.classList.remove('show');
+            }
+        });
+    </script>
+</body>
+</html>
