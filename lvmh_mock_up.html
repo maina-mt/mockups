@@ -232,9 +232,9 @@
         <!-- Left side - Map -->
         <div class="w-1/2 relative">
             <img 
-                src="./geoblink_map.png" 
+                src="./geoblink_map_no_insights_2.png" 
                 alt="Geoblink Map" 
-                class="w-full h-full object-cover"
+                class="w-full h-full object-cover object-left object-top"
             />
         </div>
 
@@ -246,9 +246,8 @@
                     <div class="flex items-center gap-2">
                         <span class="text-sm text-gray-600">Site Selector for LVMH</span>
                     </div>
-                    <div class="flex gap-2">
-                        <button class="btn btn-outline">Large</button>
-                        <button class="btn btn-default">Regular</button>
+                    <div class="flex items-center">
+                        <img src="./lvmh_logo.png" alt="LVMH Logo" class="h-8 w-auto" />
                     </div>
                 </div>
                 
@@ -266,49 +265,35 @@
                     </div>
 
                     <!-- Commercial Area Tab Content -->
-                    <div class="px-6 py-4 border-b flex items-center justify-between" id="commercial-tab-content">
-                        <div class="flex items-center gap-2">
-                            <div class="w-8 h-8 rounded-full flex items-center justify-center font-semibold text-sm" style="background-color: #1e3a8a; color: white;">
+                    <div class="px-6 py-4 border-b" id="commercial-tab-content">
+                        <div class="flex items-center gap-2 mb-3">
+                            <div class="w-6 h-6 rounded-full flex items-center justify-center font-semibold text-sm" style="background-color: #1e3a8a; color: white;">
                                 1
                             </div>
-                            <div class="dropdown">
-                                <button class="dropdown-trigger" id="commercialLocationDropdown">
-                                    <span id="selectedCommercialLocation">El Corte Ingles Barcelona (commercial area)</span>
-                                    <svg width="15" height="15" viewBox="0 0 15 15" fill="none" xmlns="http://www.w3.org/2000/svg">
-                                        <path d="M3.13523 6.15803C3.3241 5.95657 3.64052 5.94637 3.84197 6.13523L7.5 9.56464L11.158 6.13523C11.3595 5.94637 11.6759 5.95657 11.8648 6.15803C12.0536 6.35949 12.0434 6.67591 11.842 6.86477L7.84197 10.6148C7.64964 10.7951 7.35036 10.7951 7.15803 10.6148L3.15803 6.86477C2.95657 6.67591 2.94637 6.35949 3.13523 6.15803Z" fill="currentColor"/>
-                                    </svg>
-                                </button>
-                                <div class="dropdown-content" id="commercialLocationDropdownContent">
-                                    <div class="dropdown-item" data-value="commercial">El Corte Ingles Barcelona (commercial area)</div>
-                                </div>
-                            </div>
+                            <span class="text-xs font-medium">El Corte Ingles Barcelona Catalunya</span>
                         </div>
-                        <button class="btn btn-link">
-                            Compare with
-                        </button>
+                        <div class="flex items-center gap-2">
+                            <div class="w-6 h-6 rounded-full flex items-center justify-center font-semibold text-sm" style="background-color: #1e3a8a; color: white;">
+                                2
+                            </div>
+                            <span class="text-xs font-medium">El Corte Ingles Barcelona Cornellà (comparison)</span>
+                        </div>
                     </div>
 
                     <!-- Address Tab Content -->
-                    <div class="px-6 py-4 border-b flex items-center justify-between" id="address-tab-content" style="display: none;">
-                        <div class="flex items-center gap-2">
-                            <div class="w-8 h-8 rounded-full flex items-center justify-center font-semibold text-sm" style="background-color: #1e3a8a; color: white;">
+                    <div class="px-6 py-4 border-b" id="address-tab-content" style="display: none;">
+                        <div class="flex items-center gap-2 mb-3">
+                            <div class="w-6 h-6 rounded-full flex items-center justify-center font-semibold text-sm" style="background-color: #1e3a8a; color: white;">
                                 1
                             </div>
-                            <div class="dropdown">
-                                <button class="dropdown-trigger" id="addressLocationDropdown">
-                                    <span id="selectedAddressLocation">El Corte Ingles Barcelona (address)</span>
-                                    <svg width="15" height="15" viewBox="0 0 15 15" fill="none" xmlns="http://www.w3.org/2000/svg">
-                                        <path d="M3.13523 6.15803C3.3241 5.95657 3.64052 5.94637 3.84197 6.13523L7.5 9.56464L11.158 6.13523C11.3595 5.94637 11.6759 5.95657 11.8648 6.15803C12.0536 6.35949 12.0434 6.67591 11.842 6.86477L7.84197 10.6148C7.64964 10.7951 7.35036 10.7951 7.15803 10.6148L3.15803 6.86477C2.95657 6.67591 2.94637 6.35949 3.13523 6.15803Z" fill="currentColor"/>
-                                    </svg>
-                                </button>
-                                <div class="dropdown-content" id="addressLocationDropdownContent">
-                                    <div class="dropdown-item" data-value="address">El Corte Ingles Barcelona (address)</div>
-                                </div>
-                            </div>
+                            <span class="text-xs font-medium">El Corte Ingles Barcelona (address)</span>
                         </div>
-                        <button class="btn btn-link">
-                            Compare with
-                        </button>
+                        <div class="flex items-center gap-2">
+                            <div class="w-6 h-6 rounded-full flex items-center justify-center font-semibold text-sm" style="background-color: #1e3a8a; color: white;">
+                                2
+                            </div>
+                            <span class="text-xs font-medium">No comparison</span>
+                        </div>
                     </div>
 
                     <!-- Commercial Area Tab Content -->
@@ -316,17 +301,19 @@
                         <div class="scrollable-feed" id="commercialImageContainer">
                             <!-- Commercial Area Images -->
                             <div id="commercialImages">
-                                <img src="./traffic-metrics_commercial.png" alt="Traffic Metrics" />
-                                <img src="./hourly-distribution.png" alt="Hourly Distribution" />
-                                <img src="./weekly-evolution.png" alt="Weekly Evolution" />
-                                <img src="./tourist-ranking_commercial.png" alt="Tourist Ranking" />
+                                <img src="./traffic-metrics_commercial.png" alt="Geoblink Map" />
+                                <img src="./traffic-summary-comparison.png" alt="Traffic Metrics" />
+                                <img src="./traffic-weekly-comparison.png" alt="Weekly Evolution" />
+                                <img src="./traffic-hourly-comparison.png" alt="Hourly Distribution" />
+                                <img src="./tourist-nationality-comparison.png" alt="Tourist Ranking" />
                                 <img src="./international_tourists_chart.png" alt="International Tourists Chart" />
-                                <img src="./shared_visitors_kpi_area.png" alt="Population Pyramid" />
-                                <img src="./shared-visitors.png" alt="Shared Visitors" />
-                                <img src="./shared_visitors_competitors_area.png" alt="Shared Visitors" />
                                 <img src="./demographics.png" alt="Demographics" />
                                 <img src="./population-pyramid.png" alt="Population Pyramid" />
-                                <img src="./socioeconomics.png" alt="Socioeconomics" />
+                                <img src="./shared_visitors_kpi_area.png" alt="Population Pyramid" />
+                                <img src="./portfolio-cannib-comparison.png" alt="Shared Visitors" />
+                                <img src="./competitors-cannib-comparison.png" alt="Shared Visitors" />
+                                
+                                
                             </div>
                         </div>
                     </div>
@@ -343,15 +330,21 @@
                                 <img src="./pedestrians-chart.png" alt="Daily Average Pedestrians" />
                                 <img src="./tourist-ranking.png" alt="Tourist Nationality Ranking" />
                                 <img src="./international_tourists_chart.png" alt="International Tourists Chart" />
+                                <img src="./population-pyramid.png" alt="Population Pyramid" />
                                 <img src="./shared_visitors_kpi_area.png" alt="Population Pyramid" />
                                 <img src="./shared-visitors.png" alt="Shared Visitors" />
                                 <img src="./shared_visitors_competitors_area.png" alt="Shared Visitors" />
-                                <img src="./population-pyramid.png" alt="Population Pyramid" />
+                                
                             </div>
                         </div>
                     </div>
                 </div>
             </div>
+        </div>
+        
+        <!-- Footer -->
+        <div class="absolute bottom-0 right-0 p-4">
+            <img src="./lvmh_logo.png" alt="LVMH Logo" class="h-6 w-auto opacity-60" />
         </div>
     </div>
 
@@ -406,61 +399,15 @@
                 trigger.classList.add('active');
                 document.getElementById(targetTab).classList.add('active');
                 
-                // Show/hide appropriate dropdown content
+                // Show/hide appropriate store content
                 if (targetTab === 'custom-report-commercial') {
-                    commercialTabContent.style.display = 'flex';
+                    commercialTabContent.style.display = 'block';
                     addressTabContent.style.display = 'none';
                 } else if (targetTab === 'custom-report-address') {
                     commercialTabContent.style.display = 'none';
-                    addressTabContent.style.display = 'flex';
+                    addressTabContent.style.display = 'block';
                 }
             });
-        });
-
-        // Commercial Area Dropdown functionality
-        const commercialDropdown = document.getElementById('commercialLocationDropdown');
-        const commercialDropdownContent = document.getElementById('commercialLocationDropdownContent');
-        const selectedCommercialLocation = document.getElementById('selectedCommercialLocation');
-        const commercialDropdownItems = commercialDropdownContent.querySelectorAll('.dropdown-item');
-
-        commercialDropdown.addEventListener('click', (e) => {
-            e.stopPropagation();
-            commercialDropdownContent.classList.toggle('show');
-        });
-
-        commercialDropdownItems.forEach(item => {
-            item.addEventListener('click', () => {
-                selectedCommercialLocation.textContent = item.textContent;
-                commercialDropdownContent.classList.remove('show');
-            });
-        });
-
-        // Address Dropdown functionality
-        const addressDropdown = document.getElementById('addressLocationDropdown');
-        const addressDropdownContent = document.getElementById('addressLocationDropdownContent');
-        const selectedAddressLocation = document.getElementById('selectedAddressLocation');
-        const addressDropdownItems = addressDropdownContent.querySelectorAll('.dropdown-item');
-
-        addressDropdown.addEventListener('click', (e) => {
-            e.stopPropagation();
-            addressDropdownContent.classList.toggle('show');
-        });
-
-        addressDropdownItems.forEach(item => {
-            item.addEventListener('click', () => {
-                selectedAddressLocation.textContent = item.textContent;
-                addressDropdownContent.classList.remove('show');
-            });
-        });
-
-        // Close dropdowns when clicking outside
-        document.addEventListener('click', (e) => {
-            if (!commercialDropdown.contains(e.target)) {
-                commercialDropdownContent.classList.remove('show');
-            }
-            if (!addressDropdown.contains(e.target)) {
-                addressDropdownContent.classList.remove('show');
-            }
         });
     </script>
 </body>
